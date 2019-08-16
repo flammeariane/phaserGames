@@ -11,10 +11,9 @@ class PreloadScene extends Scene {
     preload (){
         this.load.image('mire', './src/assets/Mire01.png');
         this.load.image('start','./src/assets/Start.png');
-        this.load.image('star','./src/assets/star.png');
         this.load.image('back','./src/assets/Background2.png');
         this.load.image('sky', './src/assets/Background.jpg');
-        this.load.spritesheet('bomb', './src/assets/bomb.png', {frameWidth:142.5 , frameHeight: 160});
+        this.load.spritesheet('bomb', './src/assets/bomb.png', {frameWidth:61 , frameHeight: 117});
         this.load.spritesheet('cow', './src/assets/cow.png', {frameWidth:160 , frameHeight: 106});
         this.load.spritesheet('cow2', './src/assets/cow2.png', {frameWidth:160 , frameHeight: 106});
         this.load.spritesheet('cow3', './src/assets/cow3.png', {frameWidth:160 , frameHeight: 106});
@@ -22,9 +21,9 @@ class PreloadScene extends Scene {
         this.load.spritesheet('donkey', './src/assets/donkey.png', {frameWidth:160 , frameHeight: 106});
        
          /* Chargement de la musique*/
-         this.load.audio('generique', './src/assets/audio/generique.mp3');
-         this.load.audio('die','./src/assets/audio/die.mp3')
-         this.load.audio('laser','./src/assets/audio/laser.mp3');
+        this.load.audio('generique', './src/assets/audio/generique.mp3');
+        this.load.audio('die','./src/assets/audio/die.mp3')
+        this.load.audio('laser','./src/assets/audio/laser.mp3');
         this.load.audio('cri','./src/assets/audio/cri.mp3');
         this.load.audio('cri2','./src/assets/audio/cri2.mp3');
         this.load.audio('cri3','./src/assets/audio/cri3.mp3');
@@ -70,14 +69,26 @@ class PreloadScene extends Scene {
               duration: 2000
       
           });
-let cow =   this.physics.add.sprite(0, 0, 'mire').setInteractive();
+     let mire = this.physics.add.sprite(0, 0, 'mire').setInteractive();
         
-          cow.setBounce(1);
-          cow.setCollideWorldBounds(true);
-          cow.setVelocity(Phaser.Math.Between(0, 500), 100);
-    }
+          mire.setBounce(1);
+          mire.setCollideWorldBounds(true);
+          mire.setVelocity(Phaser.Math.Between(0, 500), 100);
+    
 
-   
+    let text1 = this.add.text(20, 20, 'First player to 1000pts wins');
+    //text1.setTint(0xffffff, 0xffff00, 0x0000ff, 0xff0000);
+    
+    this.tweens.add({
+        targets: text1,
+        duration: 2000,
+        scaleX: 3.5,
+        scaleY: 4,
+        ease: 'Sine.easeInOut',
+        repeat: -1,
+        yoyo: true
+    })
+    }
 
     update(){
 

@@ -3,6 +3,7 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 
+let serverDie
 let arr = []
 app.use(express.static("asset"))
 app.get('/', function (req, res) {
@@ -10,7 +11,7 @@ app.get('/', function (req, res) {
 });
 
 
-io.on('connection',socket => {
+io.on('connection', socket => {
 
 //  reçu de socket input 
     socket.on('input', function(input) {
@@ -19,12 +20,24 @@ io.on('connection',socket => {
             input:input,
         })
         let index = input.username;
-        
         io.emit("new user",index)
     })
 
-
-
+    socket.on("Scored",(data) => {  
+        for(let i = 0; i < arr.length;i++) {
+            if(arr[i].input.username == data.username)
+                arr[i].input.score = data.score
+        }
+        arr.sort(function (a, b) {
+            return a.input.score - b.input.score
+        });
+        arr.forEach(function(v) {
+           console.log(v.input.username+" avec "+v.input.score);    
+        })
+        socket.emit("ScoretoClient", arr)
+        
+    })
+   
     socket.on('disconnect', function (username) {
         let num = -1;
         let index = arr.find((value,index) => {
@@ -39,9 +52,5 @@ io.on('connection',socket => {
         }
     });
 })
-
-setInterval(()=>{
-    console.log(arr)
-},10000)
 
 server.listen(8085)

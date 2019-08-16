@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-
 import Preload from './scenes/preload';
 import Game from './scenes/game';
 
